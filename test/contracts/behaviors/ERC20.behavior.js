@@ -1,4 +1,4 @@
-const { assertRevert } = require('zos-lib')
+const { assertRevert } = require('@openzeppelin/test-helpers')
 
 module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
   const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
@@ -16,7 +16,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
       it('returns zero', async function () {
         const balance = await this.token.balanceOf(anotherAccount)
 
-        assert(balance.eq(0))
+        assert(balance.eq(web3.utils.toBN(0)))
       })
     })
 
@@ -34,7 +34,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
       const to = recipient
 
       describe('when the sender does not have enough balance', function () {
-        const amount = initialSupply.add(1)
+        const amount = initialSupply.add(web3.utils.toBN('1'))
 
         it('reverts', async function () {
           await assertRevert(this.token.transfer(to, amount, { from: owner }))
@@ -116,7 +116,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
       })
 
       describe('when the sender does not have enough balance', function () {
-        const amount = initialSupply.add(1)
+        const amount = initialSupply.add(web3.utils.toBN('1'))
 
         it('emits an approval event', async function () {
           const { logs } = await this.token.approve(spender, amount, { from: owner })
@@ -205,7 +205,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
         })
 
         describe('when the owner does not have enough balance', function () {
-          const amount = initialSupply.add(1)
+          const amount = initialSupply.add(web3.utils.toBN('1'))
 
           it('reverts', async function () {
             await assertRevert(this.token.transferFrom(owner, to, amount, { from: spender }))
@@ -227,7 +227,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
         })
 
         describe('when the owner does not have enough balance', function () {
-          const amount = initialSupply.add(1)
+          const amount = initialSupply.add(web3.utils.toBN('1'))
 
           it('reverts', async function () {
             await assertRevert(this.token.transferFrom(owner, to, amount, { from: spender }))
@@ -265,7 +265,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
 
         describe('when the spender had an approved amount', function () {
           beforeEach(async function () {
-            await this.token.approve(spender, amount.add(1), { from: owner })
+            await this.token.approve(spender, amount.add(web3.utils.toBN('1')), { from: owner })
           })
 
           it('emits an approval event', async function () {
@@ -288,7 +288,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
       })
 
       describe('when the sender does not have enough balance', function () {
-        const amount = initialSupply.add(1)
+        const amount = initialSupply.add(web3.utils.toBN('1'))
 
         describe('when there was no approved amount before', function () {
           it('reverts', async function () {
@@ -298,7 +298,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
 
         describe('when the spender had an approved amount', function () {
           beforeEach(async function () {
-            await this.token.approve(spender, amount.add(1), { from: owner })
+            await this.token.approve(spender, amount.add(web3.utils.toBN('1')), { from: owner })
           })
 
           it('emits an approval event', async function () {
@@ -366,13 +366,13 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
             await this.token.increaseAllowance(spender, amount, { from: owner })
 
             const allowance = await this.token.allowance(owner, spender)
-            assert(allowance.eq(amount.add(1)))
+            assert(allowance.eq(amount.add(web3.utils.toBN('1'))))
           })
         })
       })
 
       describe('when the sender does not have enough balance', function () {
-        const amount = initialSupply.add(1)
+        const amount = initialSupply.add(web3.utils.toBN('1'))
 
         it('emits an approval event', async function () {
           const { logs } = await this.token.increaseAllowance(spender, amount, { from: owner })
@@ -402,7 +402,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
             await this.token.increaseAllowance(spender, amount, { from: owner })
 
             const allowance = await this.token.allowance(owner, spender)
-            assert(allowance.eq(amount.add(1)))
+            assert(allowance.eq(amount.add(web3.utils.toBN('1'))))
           })
         })
       })

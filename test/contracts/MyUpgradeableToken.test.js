@@ -1,10 +1,10 @@
-const { Contracts, encodeCall, assertRevert } = require('zos-lib')
+const { encodeCall, assertRevert } = require('@openzeppelin/test-helpers')
 const shouldBehaveLikeERC20 = require('./behaviors/ERC20.behavior')
 const shouldBehaveLikeERC20Detailed = require('./behaviors/ERC20Detailed.behavior')
 
-const MyLegacyToken = Contracts.getFromLocal('MyLegacyToken')
-const MyUpgradeableToken = Contracts.getFromLocal('MyUpgradeableToken')
-const ERC20Migrator = Contracts.getFromNodeModules('openzeppelin-eth', 'ERC20Migrator')
+const MyLegacyToken = artifacts.require('MyLegacyToken')
+const MyUpgradeableToken = artifacts.require('MyUpgradeableToken')
+const ERC20Migrator = artifacts.require('ERC20Migrator')
 
 contract('MyUpgradeableToken', function ([_, owner, recipient, anotherAccount]) {
   const name = 'My Legacy Token'
@@ -26,7 +26,7 @@ contract('MyUpgradeableToken', function ([_, owner, recipient, anotherAccount]) 
   })
 
   describe('ERC20 token behavior', function () {
-    const initialSupply = new web3.BigNumber('10000e18')
+    const initialSupply = new web3.utils.BN(web3.utils.toWei('10000', 'ether'))
 
     beforeEach('migrating balance to new token', async function () {
       await this.legacyToken.approve(this.migrator.address, initialSupply, { from: owner })
