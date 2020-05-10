@@ -4,3 +4,5 @@ node_modules/
 .zos.session
 
 .env
+
+.openzeppelin/.session
