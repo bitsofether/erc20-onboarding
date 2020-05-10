@@ -5,6 +5,8 @@
   "author": "Facu Spagnuolo <facundo@zeppelin.solutions>",
   "license": "MIT",
   "scripts": {
+    "install": "npm install",
+    "build": "npx truffle compile",
     "test": "NODE_ENV=test npx truffle test"
   },
   "dependencies": {
