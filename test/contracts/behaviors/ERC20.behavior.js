@@ -1,4 +1,4 @@
-const { assertRevert } = require('@openzeppelin/test-helpers')
+const { expectRevert } = require('@openzeppelin/test-helpers')
 
 module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
   const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
@@ -37,7 +37,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
         const amount = initialSupply.add(web3.utils.toBN('1'))
 
         it('reverts', async function () {
-          await assertRevert(this.token.transfer(to, amount, { from: owner }))
+          await expectRevert.unspecified(this.token.transfer(to, amount, { from: owner }))
         })
       })
 
@@ -70,7 +70,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
       const to = ZERO_ADDRESS
 
       it('reverts', async function () {
-        await assertRevert(this.token.transfer(to, initialSupply, { from: owner }))
+        await expectRevert.unspecified(this.token.transfer(to, initialSupply, { from: owner }))
       })
     })
   })
@@ -157,7 +157,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
       const spender = ZERO_ADDRESS
 
       it('reverts', async function () {
-        await assertRevert(this.token.approve(spender, amount, { from: owner }))
+        await expectRevert.unspecified(this.token.approve(spender, amount, { from: owner }))
       })
     })
   })
@@ -208,7 +208,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
           const amount = initialSupply.add(web3.utils.toBN('1'))
 
           it('reverts', async function () {
-            await assertRevert(this.token.transferFrom(owner, to, amount, { from: spender }))
+            await expectRevert.unspecified(this.token.transferFrom(owner, to, amount, { from: spender }))
           })
         })
       })
@@ -222,7 +222,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
           const amount = initialSupply
 
           it('reverts', async function () {
-            await assertRevert(this.token.transferFrom(owner, to, amount, { from: spender }))
+            await expectRevert.unspecified(this.token.transferFrom(owner, to, amount, { from: spender }))
           })
         })
 
@@ -230,7 +230,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
           const amount = initialSupply.add(web3.utils.toBN('1'))
 
           it('reverts', async function () {
-            await assertRevert(this.token.transferFrom(owner, to, amount, { from: spender }))
+            await expectRevert.unspecified(this.token.transferFrom(owner, to, amount, { from: spender }))
           })
         })
       })
@@ -245,7 +245,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
       })
 
       it('reverts', async function () {
-        await assertRevert(this.token.transferFrom(owner, to, amount, { from: spender }))
+        await expectRevert.unspecified(this.token.transferFrom(owner, to, amount, { from: spender }))
       })
     })
   })
@@ -259,7 +259,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
 
         describe('when there was no approved amount before', function () {
           it('reverts', async function () {
-            await assertRevert(this.token.decreaseAllowance(spender, amount, { from: owner }))
+            await expectRevert.unspecified(this.token.decreaseAllowance(spender, amount, { from: owner }))
           })
         })
 
@@ -292,7 +292,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
 
         describe('when there was no approved amount before', function () {
           it('reverts', async function () {
-            await assertRevert(this.token.decreaseAllowance(spender, amount, { from: owner }))
+            await expectRevert.unspecified(this.token.decreaseAllowance(spender, amount, { from: owner }))
           })
         })
 
@@ -326,7 +326,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
       const spender = ZERO_ADDRESS
 
       it('reverts', async function () {
-        await assertRevert(this.token.decreaseAllowance(spender, amount, { from: owner }))
+        await expectRevert.unspecified(this.token.decreaseAllowance(spender, amount, { from: owner }))
       })
     })
   })
@@ -412,7 +412,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
       const spender = ZERO_ADDRESS
 
       it('reverts', async function () {
-        await assertRevert(this.token.increaseAllowance(spender, amount, { from: owner }))
+        await expectRevert.unspecified(this.token.increaseAllowance(spender, amount, { from: owner }))
       })
     })
   })
