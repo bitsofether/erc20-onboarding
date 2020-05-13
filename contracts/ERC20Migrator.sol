@@ -5,6 +5,7 @@ import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.so
 import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20Mintable.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/math/Math.sol";
+import "@openzeppelin/contracts-ethereum-package/contracts/access/roles/WhitelistedRole.sol";
 
 /**
  * @title ERC20Migrator
@@ -33,7 +34,7 @@ import "@openzeppelin/contracts-ethereum-package/contracts/math/Math.sol";
  * await migrator.beginMigration(newToken.address);
  * ```
  */
-contract ERC20Migrator is Initializable {
+contract ERC20Migrator is Initializable, WhitelistedRole {
     using SafeERC20 for IERC20;
 
     /// Address of the old token contract
@@ -45,7 +46,8 @@ contract ERC20Migrator is Initializable {
     /**
      * @param legacyToken address of the old token contract
      */
-    function initialize(IERC20 legacyToken) public initializer {
+    function initialize(IERC20 legacyToken, address sender) public initializer {
+        WhitelistedRole.initialize(sender);
         require(address(legacyToken) != address(0), "ERC20Migrator: legacy token is the zero address");
         _legacyToken = legacyToken;
     }
@@ -84,7 +86,7 @@ contract ERC20Migrator is Initializable {
      * @param account whose tokens will be migrated
      * @param amount amount of tokens to be migrated
      */
-    function migrate(address account, uint256 amount) public {
+    function migrate(address account, uint256 amount) public onlyWhitelisted {
         require(address(_newToken) != address(0), "ERC20Migrator: migration not started");
         _legacyToken.safeTransferFrom(account, address(this), amount);
         _newToken.mint(account, amount);
@@ -95,7 +97,7 @@ contract ERC20Migrator is Initializable {
      * this contract, and mints the same amount of new tokens for that account.
      * @param account whose tokens will be migrated
      */
-    function migrateAll(address account) public {
+    function migrateAll(address account) public onlyWhitelisted {
         uint256 balance = _legacyToken.balanceOf(account);
         uint256 allowance = _legacyToken.allowance(account, address(this));
         uint256 amount = Math.min(balance, allowance);

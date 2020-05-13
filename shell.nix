@@ -3,7 +3,10 @@ with import <nixpkgs> { };
 stdenv.mkDerivation {
   name = "ixo-oz-erc20-env";
   buildInputs = [
-    nodejs-13_x
+    nodejs-12_x
+    nodePackages_12_x.node-gyp
+    nodePackages_12_x.node-pre-gyp
+    nodePackages_12_x.node-gyp-build
     yarn
     git
   ];

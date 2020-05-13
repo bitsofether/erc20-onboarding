@@ -5,7 +5,6 @@
   "author": "Facu Spagnuolo <facundo@zeppelin.solutions>",
   "license": "MIT",
   "scripts": {
-    "install": "npm install",
     "build": "npx truffle compile",
     "test": "NODE_ENV=test npx truffle test"
   },
@@ -15,7 +14,6 @@
     "@openzeppelin/upgrades": "^2.8.0",
     "@truffle/hdwallet-provider": "^1.0.35",
     "dotenv": "^8.2.0",
-    "openzeppelin-eth": "^2.2.0",
     "truffle": "^5.1.25"
   },
   "devDependencies": {

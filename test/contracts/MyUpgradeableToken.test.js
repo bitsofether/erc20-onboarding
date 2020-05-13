@@ -1,4 +1,5 @@
-const { encodeCall, assertRevert } = require('@openzeppelin/test-helpers')
+const { assertRevert } = require('@openzeppelin/test-helpers')
+const { encodeCall } = require('@openzeppelin/upgrades')
 const shouldBehaveLikeERC20 = require('./behaviors/ERC20.behavior')
 const shouldBehaveLikeERC20Detailed = require('./behaviors/ERC20Detailed.behavior')
 
@@ -15,8 +16,9 @@ contract('MyUpgradeableToken', function ([_, owner, recipient, anotherAccount]) 
     this.legacyToken = await MyLegacyToken.new({ from: owner })
     
     this.migrator = await ERC20Migrator.new()
-    const migratorData = encodeCall('initialize', ['address'], [this.legacyToken.address])
+    const migratorData = encodeCall('initialize', ['address', 'address'], [this.legacyToken.address, owner])
     await this.migrator.sendTransaction({ data: migratorData })
+    await this.migrator.addWhitelisted(anotherAccount, { from: owner })
     
     this.upgradeableToken = await MyUpgradeableToken.new()
     const upgradeableTokenData = encodeCall('initialize', ['address', 'address'], [this.legacyToken.address, this.migrator.address])
