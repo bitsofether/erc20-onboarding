@@ -1,8 +1,8 @@
 const { assert, expectRevert } = require('@openzeppelin/test-helpers')
 const { encodeCall } = require('@openzeppelin/upgrades')
 
-const MyLegacyToken = artifacts.require('MyLegacyToken')
-const MyUpgradeableToken = artifacts.require('MyUpgradeableToken')
+const LegacyToken = artifacts.require('LegacyToken')
+const IXOToken = artifacts.require('IXOToken')
 const ERC20Migrator = artifacts.require('ERC20Migrator')
 
 contract('ERC20Migrator', function ([_, owner, recipient, anotherAccount]) {
@@ -11,14 +11,14 @@ contract('ERC20Migrator', function ([_, owner, recipient, anotherAccount]) {
   const decimals = 18
 
   beforeEach('deploying legacy and upgradeable tokens', async function () {
-    this.legacyToken = await MyLegacyToken.new({ from: owner })
+    this.legacyToken = await LegacyToken.new({ from: owner })
     
     this.migrator = await ERC20Migrator.new()
     const migratorData = encodeCall('initialize', ['address', 'address'], [this.legacyToken.address, owner])
     await this.migrator.sendTransaction({ data: migratorData })
     await this.migrator.addWhitelisted(owner, { from: owner })
     
-    this.upgradeableToken = await MyUpgradeableToken.new()
+    this.upgradeableToken = await IXOToken.new()
     const upgradeableTokenData = encodeCall('initialize', ['address', 'address'], [this.legacyToken.address, this.migrator.address])
     await this.upgradeableToken.sendTransaction({ data: upgradeableTokenData })
 

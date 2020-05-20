@@ -3,24 +3,24 @@ const { encodeCall } = require('@openzeppelin/upgrades')
 const shouldBehaveLikeERC20 = require('./behaviors/ERC20.behavior')
 const shouldBehaveLikeERC20Detailed = require('./behaviors/ERC20Detailed.behavior')
 
-const MyLegacyToken = artifacts.require('MyLegacyToken')
-const MyUpgradeableToken = artifacts.require('MyUpgradeableToken')
+const LegacyToken = artifacts.require('LegacyToken')
+const IXOToken = artifacts.require('IXOToken')
 const ERC20Migrator = artifacts.require('ERC20Migrator')
 
-contract('MyUpgradeableToken', function ([_, owner, recipient, anotherAccount]) {
+contract('IXOToken', function ([_, owner, recipient, anotherAccount]) {
   const name = 'My Legacy Token'
   const symbol = 'MLT'
   const decimals = 18
 
   beforeEach('deploying legacy and upgradeable tokens', async function () {
-    this.legacyToken = await MyLegacyToken.new({ from: owner })
+    this.legacyToken = await LegacyToken.new({ from: owner })
     
     this.migrator = await ERC20Migrator.new()
     const migratorData = encodeCall('initialize', ['address', 'address'], [this.legacyToken.address, owner])
     await this.migrator.sendTransaction({ data: migratorData })
     await this.migrator.addWhitelisted(owner, { from: owner })
     
-    this.upgradeableToken = await MyUpgradeableToken.new()
+    this.upgradeableToken = await IXOToken.new()
     const upgradeableTokenData = encodeCall('initialize', ['address', 'address'], [this.legacyToken.address, this.migrator.address])
     await this.upgradeableToken.sendTransaction({ data: upgradeableTokenData })
 
@@ -46,7 +46,7 @@ contract('MyUpgradeableToken', function ([_, owner, recipient, anotherAccount]) 
     })
 
     describe('when the amount is lower or equal to the one approved', function () {
-      const amount = 50
+      const amount = web3.utils.toBN('50')
 
       it('mints that amount of the new token', async function () {
         await this.migrator.migrate(owner, amount, { from: owner })

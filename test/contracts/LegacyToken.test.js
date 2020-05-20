@@ -1,13 +1,13 @@
 const shouldBehaveLikeERC20Detailed = require('./behaviors/ERC20Detailed.behavior')
 const shouldBehaveLikeERC20 = require('./behaviors/ERC20.behavior')
 
-const MyLegacyToken = artifacts.require('MyLegacyToken')
+const LegacyToken = artifacts.require('LegacyToken')
 
-contract('MyLegacyToken', function ([_, owner, recipient, anotherAccount]) {
+contract('LegacyToken', function ([_, owner, recipient, anotherAccount]) {
   const initialSupply = new web3.utils.BN(web3.utils.toWei('10000', 'ether'))
 
   beforeEach('deploying token', async function () {
-    this.token = await MyLegacyToken.new({ from: owner })
+    this.token = await LegacyToken.new({ from: owner })
   })
 
   shouldBehaveLikeERC20([owner, recipient, anotherAccount], initialSupply)

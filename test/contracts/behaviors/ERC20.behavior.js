@@ -16,7 +16,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
       it('returns zero', async function () {
         const balance = await this.token.balanceOf(anotherAccount)
 
-        assert(balance.eq(web3.utils.toBN(0)))
+        assert(balance.eq(web3.utils.toBN('0')))
       })
     })
 
@@ -48,7 +48,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
           await this.token.transfer(to, amount, { from: owner })
 
           const senderBalance = await this.token.balanceOf(owner)
-          assert(senderBalance.eq(0))
+          assert(senderBalance.eq(web3.utils.toBN('0')))
 
           const recipientBalance = await this.token.balanceOf(to)
           assert(recipientBalance.eq(amount))
@@ -180,7 +180,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
             await this.token.transferFrom(owner, to, amount, { from: spender })
 
             const senderBalance = await this.token.balanceOf(owner)
-            assert(senderBalance.eq(0))
+            assert(senderBalance.eq(web3.utils.toBN('0')))
 
             const recipientBalance = await this.token.balanceOf(to)
             assert(recipientBalance.eq(amount))
@@ -190,7 +190,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
             await this.token.transferFrom(owner, to, amount, { from: spender })
 
             const allowance = await this.token.allowance(owner, spender)
-            assert(allowance.eq(0))
+            assert(allowance.eq(web3.utils.toBN('0')))
           })
 
           it('emits a transfer event', async function () {
@@ -215,7 +215,7 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
 
       describe('when the spender does not have enough approved balance', function () {
         beforeEach(async function () {
-          await this.token.approve(spender, initialSupply.minus(1), { from: owner })
+          await this.token.approve(spender, initialSupply.sub(web3.utils.toBN('1')), { from: owner })
         })
 
         describe('when the owner has enough balance', function () {
@@ -275,14 +275,14 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
             assert.equal(logs[0].event, 'Approval')
             assert.equal(logs[0].args.owner, owner)
             assert.equal(logs[0].args.spender, spender)
-            assert(logs[0].args.value.eq(1))
+            assert(logs[0].args.value.eq(web3.utils.toBN('1')))
           })
 
           it('decreases the spender allowance subtracting the requested amount', async function () {
             await this.token.decreaseAllowance(spender, amount, { from: owner })
 
             const allowance = await this.token.allowance(owner, spender)
-            assert(allowance.eq(1))
+            assert(allowance.eq(web3.utils.toBN('1')))
           })
         })
       })
@@ -308,14 +308,14 @@ module.exports = function ([owner, recipient, anotherAccount], initialSupply) {
             assert.equal(logs[0].event, 'Approval')
             assert.equal(logs[0].args.owner, owner)
             assert.equal(logs[0].args.spender, spender)
-            assert(logs[0].args.value.eq(1))
+            assert(logs[0].args.value.eq(web3.utils.toBN('1')))
           })
 
           it('decreases the spender allowance subtracting the requested amount', async function () {
             await this.token.decreaseAllowance(spender, amount, { from: owner })
 
             const allowance = await this.token.allowance(owner, spender)
-            assert(allowance.eq(1))
+            assert(allowance.eq(web3.utils.toBN('1')))
           })
         })
       })

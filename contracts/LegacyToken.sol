@@ -3,7 +3,7 @@ pragma solidity ^0.5.0;
 
 import "./lib/ERC20Standard.sol";
 
-contract MyLegacyToken is ERC20Standard {
+contract LegacyToken is ERC20Standard {
   uint8 private constant DECIMALS = 18;
   string private constant NAME = "My Legacy Token";
   string private constant SYMBOL = "MLT";
