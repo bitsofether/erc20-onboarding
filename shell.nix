@@ -16,17 +16,22 @@ stdenv.mkDerivation {
     truffle-console() {
       npx truffle console --network local
       #truffle(local)> compile
-      #truffle(local)> owner = (await web3.eth.getAccounts())[1]
+      #truffle(local)> owner = (await web3.eth.getAccounts())[0]
       #truffle(local)> legacyToken = await MyLegacyToken.new({ from: owner })
       #truffle(local)> legacyToken.address
       #truffle(local)> (await legacyToken.balanceOf(owner)).toString()
+    }
+    generate_mnemonic() {
+      # See https://docs.openzeppelin.com/learn/connecting-to-public-test-networks#connecting-project-to-network
+      npx mnemonics
     }
     oz-init_1() {
       npx oz init token-migration 1.0.0
     }
     oz-configure_2() {
       npx oz link @openzeppelin/contracts-ethereum-package
-      npx oz add MyUpgradeableToken
+      npx oz add IXOToken
+      npx oz add ERC20Migrator
     }
     oz-deploy_3() {
       echo 'Option --deploy-dependencies only necessary for dev'

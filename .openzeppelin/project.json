@@ -1,7 +1,21 @@
 {
   "manifestVersion": "2.2",
-  "contracts": {},
+  "contracts": {
+    "IXOToken": "IXOToken",
+    "ERC20Migrator": "ERC20Migrator"
+  },
   "dependencies": {},
   "name": "ixo-erc20",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "telemetryOptIn": true,
+  "compiler": {
+    "manager": "openzeppelin",
+    "solcVersion": "0.5.17",
+    "compilerSettings": {
+      "optimizer": {
+        "enabled": false,
+        "runs": "200"
+      }
+    }
+  }
 }

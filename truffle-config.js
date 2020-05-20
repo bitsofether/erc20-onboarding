@@ -30,11 +30,24 @@ module.exports = {
       gasPrice: 5e9,
       network_id: '*'
     },
-    remote: {
+    rinkeby: {
       provider: function() {
-        return new HDWalletProvider(mnemonic, rpc_url)
+        return new HDWalletProvider(mnemonic, rpc_url, 0, 2)
       },
-      network_id: network_id
+      network_id: network_id,
+      gasPrice: 10000000000
+    }
+  },
+  compilers: {
+    solc: {
+      version: "0.5.16",
+      docker: true,
+      settings: {
+       optimizer: {
+         enabled: true,
+         runs: 200
+       }
+      }
     }
   }
 };

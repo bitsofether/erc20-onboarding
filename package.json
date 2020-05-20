@@ -2,11 +2,12 @@
   "name": "erc20-opt-in-onboarding",
   "version": "1.0.0",
   "private": true,
-  "author": "Facu Spagnuolo <facundo@zeppelin.solutions>",
+  "author": "Facu Spagnuolo <facundo@zeppelin.solutions>, refactored by Benjamin Scholtz @BenSchZA",
   "license": "MIT",
   "scripts": {
     "build": "npx truffle compile",
-    "test": "NODE_ENV=test npx truffle test"
+    "test": "NODE_ENV=test npx truffle test",
+    "migrate": "truffle migrate --network rinkeby --skip-dry-run"
   },
   "dependencies": {
     "@openzeppelin/cli": "^2.8.2",
