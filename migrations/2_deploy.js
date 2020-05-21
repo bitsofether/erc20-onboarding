@@ -1,6 +1,7 @@
 // Load zos scripts and truffle wrapper function
 const { scripts, ConfigManager } = require('@openzeppelin/cli');
 const { add, push, create } = scripts;
+const LegacyToken = artifacts.require("LegacyToken");
 
 async function deploy(options, accounts, legacyTokenAddress) {
   add({ contractsData: [{ name: 'IXOToken', alias: 'IXOToken' }] })
@@ -15,12 +16,16 @@ async function deploy(options, accounts, legacyTokenAddress) {
 module.exports = function(deployer, networkName, accounts) {
   deployer.then(async () => {
     const { network, txParams } = await ConfigManager.initNetworkConfiguration({ network: networkName, from: accounts[1] })
+    const options = { network, txParams }
 
     // add({ contractsData: [{ name: 'LegacyToken', alias: 'LegacyToken' }] })
     // await push(options)
+    const legacyToken = await deployer.deploy(LegacyToken)
     // const legacyToken = await create(Object.assign({ contractAlias: 'LegacyToken' }, options))
-    const legacyTokenAddress = "0x58c3Be0F213A495B879B7558A56D734A90b3B2d4" // Rinkeby deployment, account 0 0xd651A06279804bCc0cEdff042405090DCFDAE01c
+    // const legacyTokenAddress = "0x58c3Be0F213A495B879B7558A56D734A90b3B2d4" // Rinkeby deployment, account 0 0xd651A06279804bCc0cEdff042405090DCFDAE01c
 
-    await deploy({ network, txParams }, accounts, legacyTokenAddress)
+    console.log(network);
+
+    await deploy(options, accounts, legacyToken.address)
   })
 }

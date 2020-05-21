@@ -7,7 +7,7 @@
   "scripts": {
     "build": "npx truffle compile",
     "test": "NODE_ENV=test npx truffle test",
-    "migrate": "truffle migrate --network rinkeby --skip-dry-run"
+    "migrate": "npx truffle migrate --network rinkeby --skip-dry-run"
   },
   "dependencies": {
     "@openzeppelin/cli": "^2.8.2",

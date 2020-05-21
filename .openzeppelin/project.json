@@ -2,7 +2,8 @@
   "manifestVersion": "2.2",
   "contracts": {
     "IXOToken": "IXOToken",
-    "ERC20Migrator": "ERC20Migrator"
+    "ERC20Migrator": "ERC20Migrator",
+    "LegacyToken": "LegacyToken"
   },
   "dependencies": {},
   "name": "ixo-erc20",
