@@ -1,8 +1,8 @@
 pragma solidity ^0.5.0;
 
-import "./lib/LegacySafeMath.sol";
-import "./lib/LegacyERC20.sol";
-import "./lib/LegacyOwnable.sol";
+import "./LegacySafeMath.sol";
+import "./LegacyERC20.sol";
+import "./LegacyOwnable.sol";
 
 contract LegacyToken is LegacyERC20, LegacyOwnable {
     using LegacySafeMath for uint256;
