@@ -11,6 +11,6 @@ module.exports = function (_name, _symbol, _decimals) {
 
   it('has an amount of decimals', async function () {
     const decimals = await this.token.decimals();
-    assert(decimals.eq(_decimals));
+    assert(decimals.eq(web3.utils.toBN(_decimals)));
   });
 }
