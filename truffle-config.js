@@ -48,7 +48,7 @@ module.exports = {
         return new HDWalletProvider(mnemonic, rpc_url, 0, 2)
       },
       network_id: network_id,
-      gasPrice: 40e9,
+      gasPrice: 42e9,
       network_id: '1'
     }
   },

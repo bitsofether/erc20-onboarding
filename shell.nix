@@ -3,6 +3,9 @@ with import <nixpkgs> { };
 stdenv.mkDerivation {
   name = "ixo-oz-erc20-env";
   buildInputs = [
+    python38
+    python38Packages.pip
+    python38Packages.virtualenvwrapper
     nodejs-13_x
     git
   ];

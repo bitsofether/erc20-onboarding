@@ -1,13 +1,13 @@
 {
   "manifestVersion": "2.2",
   "contracts": {
-    "MyUpgradeableToken": "MyUpgradeableToken",
+    "IXOToken": "IXOToken",
     "ERC20Migrator": "ERC20Migrator"
   },
   "dependencies": {
     "@openzeppelin/contracts-ethereum-package": "^2.5.0"
   },
-  "name": "token-migration",
+  "name": "ixo-erc20",
   "version": "1.0.0",
   "compiler": {
     "compilerSettings": {
