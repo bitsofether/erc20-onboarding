@@ -18,7 +18,7 @@ You'll need:
 * Admin address
 * Deployer seed and address
 
-Use `oz accounts` to list accounts, where the seed is fetched from `secrets.json`, and use `oz balance` to check deployer account balance.
+Use `oz accounts` to list accounts, where the seed is fetched from `secrets.json`, and use `oz balance` to check deployer account balance. Copy the `secrets.json.example` file to `secrets.json` and fill in the mnemonic using `npx mnemonics` to generate, or any other valid method.
 
 ```bash
 oz add IXOToken
@@ -54,3 +54,8 @@ oz call
 After running `npx oz verify _`:
 * ERC20Migrator: https://etherscan.io/address/0x9B6028ea9CC135C121bd8EAb7510ec7E19347E4E#code
 * IXOToken https://etherscan.io/address/0x58c3Be0F213A495B879B7558A56D734A90b3B2d4#code
+
+# Notes
+
+* Migrations, in `_migrations`, are not working and are just there for referrence. The OZ CLI was used for all transactions and deployment.
+* There is both a `networks.js` and `truffle-config.js` config file. There were odd issues that required this, WIP.
